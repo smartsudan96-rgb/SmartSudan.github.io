@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Sudan | سمارت سودان</title>
+    
+    <!-- أيقونات (Font Awesome) عشان الأزرار -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* إعدادات عامة */
+        :root {
+            --green: #28a745;
+            --red: #dc3545;
+            --black: #222;
+            --gold: #b8860b;
+            --light-bg: #f4f4f4;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--light-bg);
+            color: var(--black);
+            transition: background 0.3s;
+        }
+        
+        /* زر تبديل اللغة */
+        .lang-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: var(--green);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        
+        /* الهيدر واللوجو */
+        header {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo-container img {
+            max-height: 80px;
+        }
+        
+        /* قسم الهيرو (الصورة الرئيسية) */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.ibb.co/6PvvWk7/blue-circuit-board-technology-background.jpg'); /* خلفية شبكة رقمية */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* قسم المشاريع (8 أماكن) */
+        .section-title {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 2.5em;
+            color: var(--green);
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 5%;
+            margin-bottom: 50px;
+        }
+        .project-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--green);
+            transition: transform 0.3s;
+            cursor: pointer; /* للتعديل عليها لاحقاً */
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .project-card i {
+            font-size: 3em;
+            color: var(--green);
+            margin-bottom: 15px;
+        }
+        
+        /* قسم الأخبار (الروابط) */
+        .news-section {
+            padding: 0 5% 50px;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .news-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .news-card a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: bold;
+        }
+        .news-card a:hover {
+            color: var(--green);
+        }
+        
+        /* قسم التحميلات (PDF) */
+        .download-section {
+            background: white;
+            padding: 50px 5%;
+            text-align: center;
+        }
+        .download-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .download-btn {
+            background: var(--black);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            border: 2px solid var(--green);
+        }
+        .download-btn:hover {
+            background: var(--green);
+        }
+        
+        /* الفوتر */
+        footer {
+            background: var(--black);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        footer a {
+            color: var(--green);
+            text-decoration: none;
+        }
+        
+        /* إدارة اتجاه اللغة عند التبديل للإنجليزية */
+        body.en {
+            direction: ltr;
+            font-family: Arial, sans-serif;
+        }
+        body.en header {
+            flex-direction: row-reverse;
+        }
+        body.en .lang-btn {
+            right: auto;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر تبديل اللغة -->
+    <button class="lang-btn" onclick="toggleLanguage()">English</button>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="logo-container">
+            <!-- ضع رابط اللوجو هنا (لوجو SS) -->
+            <img src="https://i.ibb.co/5Gk5K0s/ss-logo.jpg" alt="Smart Sudan Logo"> 
+        </div>
+        <nav>
+            <a href="#" style="text-decoration:none; color:#333; font-weight:bold;">الرئيسية</a>
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero">
+        <h1 class="ar-text">سمارت سودان</h1>
+        <h1 class="en-text" style="display:none;">Smart Sudan</h1>
+        
+        <p class="ar-text">نموذج للمشاريع الذكية المدعومة بالذكاء الاصطناعي تساهم في التنمية المستدامة وإعادة الإعمار.</p>
+        <p class="en-text" style="display:none;">A Model for AI-Powered Smart Projects Contributing to Sustainable Development and Reconstruction.</p>
+    </section>
+
+    <!-- قسم المشاريع (8 أماكن مؤقتة) -->
+    <h2 class="section-title ar-text">مشاريعنا</h2>
+    <h2 class="section-title en-text" style="display:none;">Our Projects</h2>
+
+    <section class="projects-grid" id="projects-section">
+        <!-- المشروع 1 -->
+        <div class="project-card">
+            <i class="fas fa-laptop-code"></i>
+            <h3 class="ar-text">المشروع 1: التحول الرقمي</h3>
+            <h3 class="en-text" style="display:none;">Project 1: Digital Transformation</h3>
+        </div>
+        <!-- المشروع 2 -->
+        <div class="project-card">
+            <i class="fas fa-bolt"></i>
+            <h3 class="ar-text">المشروع 2: الطاقة الذكية</h3>
+            <h3 class="en-text" style="display:none;">Project 2: Smart Energy</h3>
+        </div>
+        <!-- المشروع 3 -->
+        <div class="project-card">
+            <i class="fas fa-water"></i>
+            <h3 class="ar-text">المشروع 3: إدارة المياه</h3>
+            <h3 class="en-text" style="display:none;">Project 3: Water Management</h3>
+        </div>
+        <!-- المشروع 4 -->
+        <div class="project-card">
+            <i class="fas fa-road"></i>
+            <h3 class="ar-text">المشروع 4: البنية التحتية</h3>
+            <h3 class="en-text" style="display:none;">Project 4: Infrastructure</h3>
+        </div>
+        <!-- المشروع 5 -->
+        <div class="project-card">
+            <i class="fas fa-seedling"></i>
+            <h3 class="ar-text">المشروع 5: الزراعة الذكية</h3>
+            <h3 class="en-text" style="display:none;">Project 5: Smart Agriculture</h3>
+        </div>
+        <!-- المشروع 6 -->
+        <div class="project-card">
+            <i class="fas fa-building"></i>
+            <h3 class="ar-text">المشروع 6: المدن الذكية</h3>
+            <h3 class="en-text" style="display:none;">Project 6: Smart Cities</h3>
+        </div>
+        <!-- المشروع 7 -->
+        <div class="project-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3 class="ar-text">المشروع 7: الأمن السيبراني</h3>
+            <h3 class="en-text" style="display:none;">Project 7: Cybersecurity</h3>
+        </div>
+        <!-- المشروع 8 -->
+        <div class="project-card">
+            <i class="fas fa-notes-medical"></i>
+            <h3 class="ar-text">المشروع 8: الصحة الذكية</h3>
+            <h3 class="en-text" style="display:none;">Project 8: Smart Health</h3>
+        </div>
+    </section>
+
+    <!-- قسم الأخبار (الروابط) -->
+    <h2 class="section-title ar-text">الأخبار والروابط</h2>
+    <h2 class="section-title en-text" style="display:none;">News & Links</h2>
+    
+    <section class="news-section">
+        <div class="news-grid">
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://wasselmedia.net/?p=20768" target="_blank">Wassel Media</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://tara-news.com/2026/09/05/%d9%86%d8%ad%d9%88-%d9%85%d8%b3%d8%aa%d9%82%d8%a8%d9%84-%d8%b1%d9%82%d9%85%d9%8a-%d9%85%d8%b3%d8%aa%d8%af%d8%a7%d9%85-%d8%b5%d8%af%d9%88%d8%b1-%d9%83%d8%aa%d8%a7%d8%a8-%d8%b3%d9%85%d8%a7%d8%b1/" target="_blank">Tara News</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://akhbarkomnews.net/?p=8647" target="_blank">Akhbar Kom</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://alamalnews.net/81859/" target="_blank">Al Amal News</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://albaladpost.net/?p=7281" target="_blank">Al Balad Post</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://www.almarefaa.com/10884/" target="_blank">Al Marefaa</a></div>
+            <div class="news-card"><i class="fas fa-newspaper"></i> <a href="https://alawdanews.com/archives/31967" target="_blank">Al Wdan News</a></div>
+            <div class="news-card"><i class="fab fa-facebook"></i> <a href="https://m.facebook.com/story.php?story_fbid=pfbid02NescsQc4HhufajFdNc4RDwYPdxnvchXiWexA79QwQuitZDtHKuTkEhXJer3VVuzyl&id=100076846960814&sfnsn=wa" target="_blank">Facebook Post 1</a></div>
+            <div class="news-card"><i class="fab fa-facebook"></i> <a href="https://m.facebook.com/story.php?story_fbid=pfbid0yvAJ4xYLPRZjPA1aqEUKtQpLZubAfYi1MCja1Jy8BxhmG7sN5tCrgKRwPdZVgNLHl&id=61571070544692&sfnsn=wa" target="_blank">Facebook Post 2</a></div>
+        </div>
+    </section>
+
+    <!-- قسم التحميلات (PDF) - هنعدل الروابط لما تبعتهم -->
+    <section class="download-section" id="downloads">
+        <h2 class="ar-text">الملفات والتحميلات</h2>
+        <h2 class="en-text" style="display:none;">Files & Downloads</h2>
+        <p class="ar-text" style="margin-top:10px;">اضغط على الأزرار لتحميل ملفات PDF</p>
+        <p class="en-text" style="display:none; margin-top:10px;">Click the buttons below to download PDF files</p>
+        
+        <div class="download-btns">
+            <!-- ضع رابط التحميل في الـ href -->
+            <a href="#" class="download-btn" target="_blank"><i class="fas fa-file-pdf"></i> <span class="ar-text">تحميل الملف الأول</span><span class="en-text" style="display:none;">Download File 1</span></a>
+            <a href="#" class="download-btn" target="_blank"><i class="fas fa-file-pdf"></i> <span class="ar-text">تحميل الملف الثاني</span><span class="en-text" style="display:none;">Download File 2</span></a>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <h3>Smart Sudan | سمارت سودان</h3>
+        <p style="margin-top:10px;">هاتف / Phone: <a href="tel:+249965158275">+24996 515 8275</a></p>
+        <p style="margin-top:5px;"><a href="https://goo.gl/maps/bv8Csn52NPGCj1Pg9" target="_blank">موقعنا على الخريطة | Our Location</a></p>
+    </footer>
+
+    <!-- كود الجافاسكريبت لتبديل اللغة -->
+    <script>
+        function toggleLanguage() {
+            const body = document.body;
+            const arTexts = document.querySelectorAll('.ar-text');
+            const enTexts = document.querySelectorAll('.en-text');
+            const btn = document.querySelector('.lang-btn');
+
+            if (body.classList.contains('en')) {
+                // تحويل للعربية
+                body.classList.remove('en');
+                body.setAttribute('dir', 'rtl');
+                arTexts.forEach(el => el.style.display = 'block');
+                enTexts.forEach(el => el.style.display = 'none');
+                btn.innerText = 'English';
+            } else {
+                // تحويل للإنجليزية
+                body.classList.add('en');
+                body.setAttribute('dir', 'ltr');
+                arTexts.forEach(el => el.style.display = 'none');
+                enTexts.forEach(el => el.style.display = 'block');
+                btn.innerText = 'عربي';
+            }
+        }
+    </script>
+</body>
+</html>
